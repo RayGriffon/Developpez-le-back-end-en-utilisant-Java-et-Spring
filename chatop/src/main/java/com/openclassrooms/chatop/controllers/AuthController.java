@@ -1,13 +1,10 @@
 package com.openclassrooms.chatop.controllers;
 
-import com.openclassrooms.chatop.model.User;
-import com.openclassrooms.chatop.service.JWTService;
-import com.openclassrooms.chatop.service.UserService;
+import com.openclassrooms.chatop.service.AuthService;
+import com.openclassrooms.chatop.service.dto.UserDTO;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
@@ -17,29 +14,22 @@ import java.util.Map;
 public class AuthController {
 
   @Autowired
-  private UserService userService;
-
-  @Autowired
-  private JWTService jwtService;
-
-  @Autowired
-  private AuthenticationManager authenticationManager;
+  private AuthService authService;
 
   @PostMapping("/register")
-  public User register(@RequestBody Map<String, String> payload) {
-    return userService.register(payload.get("email"), payload.get("name"), payload.get("password"));
+  public ResponseEntity<Map<String, String>> register(@RequestBody UserDTO userDTO) {
+    String token = authService.register(userDTO);
+    return ResponseEntity.ok(Map.of("token", token));
   }
 
   @PostMapping("/login")
-  public String login(@RequestBody Map<String, String> payload) {
-    Authentication authentication = authenticationManager.authenticate(
-      new UsernamePasswordAuthenticationToken(payload.get("login"), payload.get("password")));
-    SecurityContextHolder.getContext().setAuthentication(authentication);
-    return jwtService.generateToken(authentication);
+  public ResponseEntity<Map<String, String>> login(@RequestBody Map<String, String> loginRequest) {
+    String token = authService.login(loginRequest.get("login"), loginRequest.get("password"));
+    return ResponseEntity.ok(Map.of("token", token));
   }
 
   @GetMapping("/me")
-  public User me(Authentication authentication) {
-    return (User) authentication.getPrincipal();
+  public ResponseEntity<UserDTO> me(Authentication authentication) {
+    return ResponseEntity.ok(authService.getMe(authentication));
   }
 }

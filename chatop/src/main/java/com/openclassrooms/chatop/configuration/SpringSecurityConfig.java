@@ -8,16 +8,12 @@ import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.oauth2.jose.jws.MacAlgorithm;
 import org.springframework.security.oauth2.jwt.JwtDecoder;
 import org.springframework.security.oauth2.jwt.JwtEncoder;
 import org.springframework.security.oauth2.jwt.NimbusJwtDecoder;
 import org.springframework.security.oauth2.jwt.NimbusJwtEncoder;
-import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 
 import javax.crypto.spec.SecretKeySpec;
@@ -39,18 +35,12 @@ public class SpringSecurityConfig {
           "/swagger-ui/**",
           "/swagger-ui.html"
         ).permitAll()
-        .anyRequest().authenticated()
+          .anyRequest().permitAll()
+        //.anyRequest().authenticated() @TODO
       )
       .oauth2ResourceServer(oauth2 -> oauth2.jwt(Customizer.withDefaults()))
       .httpBasic(Customizer.withDefaults())
       .build();
-  }
-
-
-  @Bean
-  public UserDetailsService users() {
-    UserDetails user = User.builder().username("user").password(passwordEncoder().encode("user")).roles("USER").build();
-    return new InMemoryUserDetailsManager(user);
   }
 
   @Bean
@@ -73,5 +63,4 @@ public class SpringSecurityConfig {
   public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
     return authenticationConfiguration.getAuthenticationManager();
   }
-
 }

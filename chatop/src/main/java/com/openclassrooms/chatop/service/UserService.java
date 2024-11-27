@@ -2,9 +2,16 @@ package com.openclassrooms.chatop.service;
 
 import com.openclassrooms.chatop.model.User;
 import com.openclassrooms.chatop.repository.UserRepository;
+import com.openclassrooms.chatop.service.dto.UserDTO;
+import com.openclassrooms.chatop.service.mapper.UserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.util.Optional;
 
 @Service
 public class UserService {
@@ -13,13 +20,16 @@ public class UserService {
   private UserRepository userRepository;
 
   @Autowired
-  private PasswordEncoder passwordEncoder;
+  private UserMapper userMapper;
 
-  public User register(String email, String name, String password) {
-    User user = new User();
-    user.setEmail(email);
-    user.setName(name);
-    user.setPassword(passwordEncoder.encode(password));
-    return userRepository.save(user);
+  public User findById(Integer id) {
+    return userRepository.findById(id).orElseThrow(() -> new RuntimeException("User non trouvé"));
   }
+
+  public UserDTO getUserById(Integer id) {
+    User user = userRepository.findById(id)
+      .orElseThrow(() -> new IllegalArgumentException("User not found"));
+    return userMapper.toUserDTO(user);
+  }
+
 }

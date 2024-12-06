@@ -2,54 +2,37 @@
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 14.1.0.
 
-## Start the project
+# Chatop
 
-Git clone:
+Une application permettant de connecter les utilisateurs avec des propriétaires pour discuter et réserver des locations.
 
-> git clone https://github.com/OpenClassrooms-Student-Center/P3-Full-Stack-portail-locataire
+## Description
 
-Go inside folder:
+Chatop est une plateforme de location et de messagerie qui permet aux utilisateurs de :
 
-> cd P3-Full-Stack-portail-locataire
+- Se connecter via email et mot de passe pour accéder à leur compte.
+- Envoyer des messages aux propriétaires de biens immobiliers.
+- Visualiser les locations disponibles.
+- Créer des locations
 
-Install dependencies:
+L'application utilise **Spring Boot** pour le backend et **Angular** pour le frontend.
 
-> npm install
+## Prérequis
 
-Launch Front-end:
+Avant de commencer, assurez-vous d'avoir les outils suivants installés :
 
-> npm run start;
+- [Java 21+](https://adoptium.net/)
+- [Node.js 18+](https://nodejs.org/)
+- [Angular 14+](https://angular.io/cli)
+- Une base de données MySQL .
 
+## Architecture
 
-## Ressources
+- **Backend** : Spring Boot, avec JPA pour la gestion des entités et MySQL comme base de données.
+- **Frontend** : Angular.
+- **Authentification** : JWT pour sécuriser les endpoints.
 
-### Mockoon env
+## Utilisation
 
-Download Mockoon here: https://mockoon.com/download/
-
-After installing you could load the environement
-
-> ressources/mockoon/rental-oc.json
-
-directly inside Mockoon 
-
-> File > Open environmement
-
-For launching the Mockoon server click on play bouton
-
-Mockoon documentation: https://mockoon.com/docs/latest/about/
-
-### Postman collection
-
-For Postman import the collection
-
-> ressources/postman/rental.postman_collection.json 
-
-by following the documentation: 
-
-https://learning.postman.com/docs/getting-started/importing-and-exporting-data/#importing-data-into-postman
-
-
-### MySQL
-
-SQL script for creating the schema is available `ressources/sql/script.sql`
+La documentation swagger est accessible ici : http://localhost:3001/api/swagger-ui/index.html
+Après avoir démarrer la partie angular (npm start), vous pouvez accéder à l'application ici : http://localhost:4200/

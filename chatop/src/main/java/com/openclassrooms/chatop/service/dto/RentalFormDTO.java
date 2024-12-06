@@ -11,12 +11,10 @@ import java.math.BigDecimal;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class RentalDTO {
-  private Integer id;
+public class RentalFormDTO {
   private String name;
   private BigDecimal surface;
   private BigDecimal price;
-  private String picture; // URL de l'image
   private String description;
   private Integer ownerId;
 }

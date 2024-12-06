@@ -4,14 +4,9 @@ import com.openclassrooms.chatop.model.User;
 import com.openclassrooms.chatop.repository.UserRepository;
 import com.openclassrooms.chatop.service.dto.UserDTO;
 import com.openclassrooms.chatop.service.mapper.UserMapper;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-
-import java.util.Optional;
 
 @Service
 public class UserService {
@@ -28,7 +23,17 @@ public class UserService {
 
   public UserDTO getUserById(Integer id) {
     User user = userRepository.findById(id)
-      .orElseThrow(() -> new IllegalArgumentException("User not found"));
+      .orElseThrow(() -> new IllegalArgumentException("User non trouvé"));
+    return userMapper.toUserDTO(user);
+  }
+
+  public UserDTO findByMail(String mail) {
+    User user = userRepository.findByEmail(mail).orElseThrow();
+    return userMapper.toUserDTO(user);
+  }
+
+  public UserDTO findById(int id) {
+    User user = userRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("User non trouvé"));
     return userMapper.toUserDTO(user);
   }
 

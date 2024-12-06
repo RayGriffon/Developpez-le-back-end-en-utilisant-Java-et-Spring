@@ -1,6 +1,7 @@
 package com.openclassrooms.chatop.configuration;
 
 import com.nimbusds.jose.jwk.source.ImmutableSecret;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -21,7 +22,8 @@ import javax.crypto.spec.SecretKeySpec;
 @Configuration
 public class SpringSecurityConfig {
 
-  private String jwtKey = "4ALac3NtLYg9l5IGb2RSk2xIF1CDb8u3G+AoFbMHpYw=";
+  @Value("${jwt.secret.key}")
+  private String jwtKey;
 
   @Bean
   public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
@@ -29,14 +31,15 @@ public class SpringSecurityConfig {
       .csrf(csrf -> csrf.disable())
       .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
       .authorizeHttpRequests(auth -> auth
-        // Autoriser Swagger sans authentification
         .requestMatchers(
+          "/auth/register",
+          "/auth/login",
+          "/images/**",
           "/v3/api-docs/**",
           "/swagger-ui/**",
           "/swagger-ui.html"
         ).permitAll()
-          .anyRequest().permitAll()
-        //.anyRequest().authenticated() @TODO
+        .anyRequest().authenticated()
       )
       .oauth2ResourceServer(oauth2 -> oauth2.jwt(Customizer.withDefaults()))
       .httpBasic(Customizer.withDefaults())

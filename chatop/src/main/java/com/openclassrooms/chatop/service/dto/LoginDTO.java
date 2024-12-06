@@ -5,9 +5,10 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class UserDTO {
-  private Integer id;
+
+public class LoginDTO {
+
   private String email;
-  private String name;
   private String password;
+
 }

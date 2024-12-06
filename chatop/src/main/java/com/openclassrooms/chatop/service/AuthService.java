@@ -40,7 +40,7 @@ public class AuthService {
     if (!passwordEncoder.matches(password, user.getPassword())) {
       throw new IllegalArgumentException("Invalid credentials");
     }
-    return jwtService.generateToken(new UsernamePasswordAuthenticationToken(user.getEmail(), null));
+    return jwtService.generateToken(new UsernamePasswordAuthenticationToken(email, null));
   }
 
   public UserDTO getMe(Authentication authentication) {

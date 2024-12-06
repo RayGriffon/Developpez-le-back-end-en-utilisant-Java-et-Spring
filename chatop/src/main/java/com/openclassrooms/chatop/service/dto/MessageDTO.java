@@ -1,40 +1,13 @@
 package com.openclassrooms.chatop.service.dto;
 
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
 public class MessageDTO {
   private Integer id;
   private String message;
-  private Integer rentalId;
-  private Integer userId;
-
-  public Integer getId() {
-    return id;
-  }
-
-  public void setId(Integer id) {
-    this.id = id;
-  }
-
-  public String getMessage() {
-    return message;
-  }
-
-  public void setMessage(String message) {
-    this.message = message;
-  }
-
-  public Integer getRentalId() {
-    return rentalId;
-  }
-
-  public void setRentalId(Integer rentalId) {
-    this.rentalId = rentalId;
-  }
-
-  public Integer getUserId() {
-    return userId;
-  }
-
-  public void setUserId(Integer userId) {
-    this.userId = userId;
-  }
+  private Integer rental_id;
+  private Integer user_id;
 }

@@ -1,7 +1,3 @@
-# Estate
-
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 14.1.0.
-
 # Chatop
 
 Une application permettant de connecter les utilisateurs avec des propriétaires pour discuter et réserver des locations.

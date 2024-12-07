@@ -41,4 +41,5 @@ Dans le fichier application.properties se trouve les variables configurables sui
 ## Utilisation
 
 La documentation swagger est accessible ici : http://localhost:3001/api/swagger-ui/index.html
+
 Après avoir démarrer la partie angular (npm start), vous pouvez accéder à l'application ici : http://localhost:4200/

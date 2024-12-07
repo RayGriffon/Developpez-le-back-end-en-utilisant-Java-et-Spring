@@ -1,55 +1,45 @@
-# Estate
+# Chatop
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 14.1.0.
+Une application permettant de connecter les utilisateurs avec des propriétaires pour discuter et réserver des locations.
 
-## Start the project
+## Description
 
-Git clone:
+Chatop est une plateforme de location et de messagerie qui permet aux utilisateurs de :
 
-> git clone https://github.com/OpenClassrooms-Student-Center/P3-Full-Stack-portail-locataire
+- Se connecter via email et mot de passe pour accéder à leur compte.
+- Envoyer des messages aux propriétaires de biens immobiliers.
+- Visualiser les locations disponibles.
+- Créer des locations
 
-Go inside folder:
+L'application utilise **Spring Boot** pour le backend et **Angular** pour le frontend.
 
-> cd P3-Full-Stack-portail-locataire
+## Prérequis
 
-Install dependencies:
+Avant de commencer, assurez-vous d'avoir les outils suivants installés :
 
-> npm install
+- [Java 21+](https://adoptium.net/)
+- [Node.js 18+](https://nodejs.org/)
+- [Angular 14+](https://angular.io/cli)
+- Une base de données MySQL .
 
-Launch Front-end:
+## Installation
 
-> npm run start;
+L'application à cloner se trouve ici : https://github.com/RayGriffon/Developpez-le-back-end-en-utilisant-Java-et-Spring
+La base de donnée utilise le port 3306.
 
+Dans le fichier application.properties se trouve les variables configurables suivantes :
+- Pour la BDD : username, password
+- Pour le token : la secret key
+- Pour l'upload d'images : le lien où elles sont enregistrées
 
-## Ressources
+## Architecture
 
-### Mockoon env
+- **Backend** : Spring Boot, avec JPA pour la gestion des entités et MySQL comme base de données.
+- **Frontend** : Angular.
+- **Authentification** : JWT pour sécuriser les endpoints.
 
-Download Mockoon here: https://mockoon.com/download/
+## Utilisation
 
-After installing you could load the environement
+La documentation swagger est accessible ici : http://localhost:3001/api/swagger-ui/index.html
 
-> ressources/mockoon/rental-oc.json
-
-directly inside Mockoon 
-
-> File > Open environmement
-
-For launching the Mockoon server click on play bouton
-
-Mockoon documentation: https://mockoon.com/docs/latest/about/
-
-### Postman collection
-
-For Postman import the collection
-
-> ressources/postman/rental.postman_collection.json 
-
-by following the documentation: 
-
-https://learning.postman.com/docs/getting-started/importing-and-exporting-data/#importing-data-into-postman
-
-
-### MySQL
-
-SQL script for creating the schema is available `ressources/sql/script.sql`
+Après avoir démarrer la partie angular (npm start), vous pouvez accéder à l'application ici : http://localhost:4200/

@@ -28,9 +28,9 @@ L'application à cloner se trouve ici : https://github.com/RayGriffon/Developpez
 La base de donnée utilise le port 3306.
 
 Dans le fichier application.properties se trouve les variables configurables suivantes :
-Pour la BDD : username, password
-Pour le token : la secret key
-Pour l'upload d'images : le lien où elles sont enregistrées
+- Pour la BDD : username, password
+- Pour le token : la secret key
+- Pour l'upload d'images : le lien où elles sont enregistrées
 
 ## Architecture
 

@@ -4,6 +4,7 @@ import com.openclassrooms.chatop.service.RentalService;
 import com.openclassrooms.chatop.service.UserService;
 import com.openclassrooms.chatop.service.dto.RentalDTO;
 import com.openclassrooms.chatop.service.dto.RentalFormDTO;
+import com.openclassrooms.chatop.service.dto.UpdateRentalDTO;
 import com.openclassrooms.chatop.service.dto.UserDTO;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -58,7 +59,7 @@ public class RentalController {
     @RequestParam("description") String description,
     Principal principal) throws IOException {
 
-  UserDTO user = userService.findByMail(principal.getName());
+    UserDTO user = userService.findByMail(principal.getName());
 
     RentalFormDTO rentalDTO = new RentalFormDTO(name, surface, price, description, user.getId());
     rentalService.createRental(rentalDTO, picture);
@@ -69,8 +70,10 @@ public class RentalController {
   @ApiResponse(responseCode = "200", description = "Rental actualisé")
   @ApiResponse(responseCode = "401", description = "Non autorisé")
   @PutMapping("/{id}")
-  public ResponseEntity<Map<String, String>> updateRental(@PathVariable Integer id, @RequestBody RentalDTO rentalDTO) {
-    rentalService.updateRental(id, rentalDTO);
+  public ResponseEntity<Map<String, String>> updateRental(@PathVariable Integer id, @RequestBody UpdateRentalDTO updateRentalDTO, Principal principal) {
+    UserDTO userDTO = userService.findByMail(principal.getName());
+    rentalService.updateRental(id, updateRentalDTO, userDTO.getId());
+
     return ResponseEntity.ok(Map.of("message", "Rental updated!"));
   }
 }

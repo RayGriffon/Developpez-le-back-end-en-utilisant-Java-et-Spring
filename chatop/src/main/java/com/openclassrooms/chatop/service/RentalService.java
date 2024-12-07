@@ -4,6 +4,7 @@ import com.openclassrooms.chatop.model.Rental;
 import com.openclassrooms.chatop.repository.RentalRepository;
 import com.openclassrooms.chatop.service.dto.RentalDTO;
 import com.openclassrooms.chatop.service.dto.RentalFormDTO;
+import com.openclassrooms.chatop.service.dto.UpdateRentalDTO;
 import com.openclassrooms.chatop.service.mapper.RentalMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -55,13 +56,20 @@ public class RentalService {
     rentalRepository.save(rentalMapper.toRental(rentalDTO, url));
   }
 
-  public void updateRental(Integer id, RentalDTO rentalDTO) {
+  public void updateRental(Integer id, UpdateRentalDTO updateRentalDTO, Integer userId) {
+
     Rental rental = rentalRepository.findById(id)
-            .orElseThrow(() -> new IllegalArgumentException("Rental non trouvé"));
-    rental.setName(rentalDTO.getName());
-    rental.setDescription(rentalDTO.getDescription());
-    rental.setSurface(rentalDTO.getSurface());
-    rental.setPrice(rentalDTO.getPrice());
+      .orElseThrow(() -> new IllegalArgumentException("Rental non trouvé"));
+
+    if (!rental.getOwner().getId().equals(userId)) {
+      throw new SecurityException("Vous n'êtes pas autorisé à modifier ce rental");
+    }
+
+    if (updateRentalDTO.getName() != null) rental.setName(updateRentalDTO.getName());
+    if (updateRentalDTO.getDescription() != null) rental.setDescription(updateRentalDTO.getDescription());
+    if (updateRentalDTO.getSurface() != null) rental.setSurface(updateRentalDTO.getSurface());
+    if (updateRentalDTO.getPrice() != null) rental.setPrice(updateRentalDTO.getPrice());
+
     rentalRepository.save(rental);
   }
 
@@ -73,6 +81,4 @@ public class RentalService {
     Files.copy(image.getInputStream(), cible, StandardCopyOption.REPLACE_EXISTING);
     return "api/images/" + fileName;
   }
-
-
 }

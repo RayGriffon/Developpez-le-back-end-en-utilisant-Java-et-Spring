@@ -22,6 +22,16 @@ Avant de commencer, assurez-vous d'avoir les outils suivants installés :
 - [Angular 14+](https://angular.io/cli)
 - Une base de données MySQL .
 
+## Installation
+
+L'application à cloner se trouve ici : https://github.com/RayGriffon/Developpez-le-back-end-en-utilisant-Java-et-Spring
+La base de donnée utilise le port 3306.
+
+Dans le fichier application.properties se trouve les variables configurables suivantes :
+Pour la BDD : username, password
+Pour le token : la secret key
+Pour l'upload d'images : le lien où elles sont enregistrées
+
 ## Architecture
 
 - **Backend** : Spring Boot, avec JPA pour la gestion des entités et MySQL comme base de données.

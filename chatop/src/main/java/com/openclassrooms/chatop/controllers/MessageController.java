@@ -8,6 +8,7 @@ import com.openclassrooms.chatop.service.dto.MessageResponseDTO;
 import com.openclassrooms.chatop.service.dto.UserDTO;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import org.apache.coyote.BadRequestException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -33,7 +34,6 @@ public class MessageController {
   @ApiResponse(responseCode = "400", description = "Erreur à la création")
   @PostMapping
   public ResponseEntity<MessageResponseDTO> createMessage(@RequestBody CreateMessageDTO createMessageDTO) {
-
     String email = SecurityContextHolder.getContext().getAuthentication().getName();
 
     UserDTO user = userService.findByMail(email);

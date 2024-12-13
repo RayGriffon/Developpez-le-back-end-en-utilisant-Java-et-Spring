@@ -40,16 +40,6 @@ public class RentalMapper {
     return rental;
   }
 
-  public Rental toRental(RentalDTO rentalDTO) {
-    Rental rental = new Rental();
-    rental.setOwner(userService.findById(rentalDTO.getOwnerId()));
-    rental.setName(rentalDTO.getName());
-    rental.setDescription(rentalDTO.getDescription());
-    rental.setSurface(rentalDTO.getSurface());
-    rental.setPrice(rentalDTO.getPrice());
-    return rental;
-  }
-
   public List<RentalDTO> toListRentalDTO(List<Rental> rentals) {
     if (rentals == null || rentals.isEmpty()) {return null;}
 

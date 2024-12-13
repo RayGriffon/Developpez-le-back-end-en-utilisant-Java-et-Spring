@@ -1,5 +1,7 @@
 package com.openclassrooms.chatop.service;
 
+import com.openclassrooms.chatop.exceptions.BadRequestException;
+import com.openclassrooms.chatop.exceptions.UnauthorizedException;
 import com.openclassrooms.chatop.model.User;
 import com.openclassrooms.chatop.repository.UserRepository;
 import com.openclassrooms.chatop.service.dto.UserDTO;
@@ -24,7 +26,7 @@ public class AuthService {
 
   public String register(UserDTO userDTO) {
     if (userRepository.findByEmail(userDTO.getEmail()).isPresent()) {
-      throw new IllegalArgumentException("Email déjà utilisé");
+      throw new BadRequestException("Email déjà utilisé");
     }
     User user = new User();
     user.setEmail(userDTO.getEmail());
@@ -36,16 +38,16 @@ public class AuthService {
 
   public String login(String email, String password) {
     User user = userRepository.findByEmail(email)
-      .orElseThrow(() -> new IllegalArgumentException("User non trouvé"));
+      .orElseThrow(() -> new UnauthorizedException("User non trouvé"));
     if (!passwordEncoder.matches(password, user.getPassword())) {
-      throw new IllegalArgumentException("Invalid credentials");
+      throw new UnauthorizedException("Identifiants incorects");
     }
     return jwtService.generateToken(new UsernamePasswordAuthenticationToken(email, null));
   }
 
   public UserDTO getMe(Authentication authentication) {
     User user = userRepository.findByEmail(authentication.getName())
-      .orElseThrow(() -> new IllegalArgumentException("User non trouvé"));
+      .orElseThrow(() -> new UnauthorizedException("User non trouvé"));
     return new UserMapper().toUserDTO(user);
   }
 }

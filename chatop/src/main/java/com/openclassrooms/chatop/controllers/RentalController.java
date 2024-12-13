@@ -6,6 +6,7 @@ import com.openclassrooms.chatop.service.dto.RentalDTO;
 import com.openclassrooms.chatop.service.dto.RentalFormDTO;
 import com.openclassrooms.chatop.service.dto.UpdateRentalDTO;
 import com.openclassrooms.chatop.service.dto.UserDTO;
+import com.openclassrooms.chatop.service.mapper.RentalMapper;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -30,6 +31,9 @@ public class RentalController {
 
   @Autowired
   private UserService userService;
+
+  @Autowired
+  private RentalMapper rentalMapper;
 
   @Operation(summary = "Récupérer tout les rentals", description = "Retourne une liste de tout les rentals disponibles")
   @ApiResponse(responseCode = "200", description = "Liste des rentals récupérée avec succès")
@@ -70,10 +74,10 @@ public class RentalController {
   @ApiResponse(responseCode = "200", description = "Rental actualisé")
   @ApiResponse(responseCode = "401", description = "Non autorisé")
   @PutMapping("/{id}")
-  public ResponseEntity<Map<String, String>> updateRental(@PathVariable Integer id, @RequestBody UpdateRentalDTO updateRentalDTO, Principal principal) {
+  public ResponseEntity<RentalDTO> updateRental(@PathVariable Integer id, @RequestBody UpdateRentalDTO updateRentalDTO, Principal principal) {
     UserDTO userDTO = userService.findByMail(principal.getName());
-    rentalService.updateRental(id, updateRentalDTO, userDTO.getId());
+    RentalDTO rental = rentalMapper.toRentalDTO(rentalService.updateRental(id, userDTO.getId(), updateRentalDTO.getName(), updateRentalDTO.getDescription(), updateRentalDTO.getSurface(), updateRentalDTO.getPrice()));
 
-    return ResponseEntity.ok(Map.of("message", "Rental updated!"));
+    return ResponseEntity.ok(rental);
   }
 }

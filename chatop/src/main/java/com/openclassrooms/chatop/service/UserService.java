@@ -1,5 +1,6 @@
 package com.openclassrooms.chatop.service;
 
+import com.openclassrooms.chatop.exceptions.BadRequestException;
 import com.openclassrooms.chatop.model.User;
 import com.openclassrooms.chatop.repository.UserRepository;
 import com.openclassrooms.chatop.service.dto.UserDTO;
@@ -18,22 +19,22 @@ public class UserService {
   private UserMapper userMapper;
 
   public User findById(Integer id) {
-    return userRepository.findById(id).orElseThrow(() -> new RuntimeException("User non trouvé"));
+    return userRepository.findById(id).orElseThrow(() -> new BadRequestException("User non trouvé"));
   }
 
   public UserDTO getUserById(Integer id) {
     User user = userRepository.findById(id)
-      .orElseThrow(() -> new IllegalArgumentException("User non trouvé"));
+      .orElseThrow(() -> new BadRequestException("User non trouvé"));
     return userMapper.toUserDTO(user);
   }
 
   public UserDTO findByMail(String mail) {
-    User user = userRepository.findByEmail(mail).orElseThrow();
+    User user = userRepository.findByEmail(mail).orElseThrow(() -> new BadRequestException("Email non trouvé"));
     return userMapper.toUserDTO(user);
   }
 
   public UserDTO findById(int id) {
-    User user = userRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("User non trouvé"));
+    User user = userRepository.findById(id).orElseThrow(() -> new BadRequestException("User non trouvé"));
     return userMapper.toUserDTO(user);
   }
 

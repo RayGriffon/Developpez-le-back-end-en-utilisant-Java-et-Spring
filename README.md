@@ -20,7 +20,7 @@ Avant de commencer, assurez-vous d'avoir les outils suivants installés :
 - [Java 21+](https://adoptium.net/)
 - [Node.js 18+](https://nodejs.org/)
 - [Angular 14+](https://angular.io/cli)
-- Une base de données MySQL .
+- Une base de données MySQL. (Le script se trouve ici : https://github.com/RayGriffon/Developpez-le-back-end-en-utilisant-Java-et-Spring/blob/main/ressources/sql/script.sql)
 
 ## Installation
 

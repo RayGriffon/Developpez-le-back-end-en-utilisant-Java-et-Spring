@@ -27,10 +27,13 @@ Avant de commencer, assurez-vous d'avoir les outils suivants installés :
 L'application à cloner se trouve ici : https://github.com/RayGriffon/Developpez-le-back-end-en-utilisant-Java-et-Spring
 La base de donnée utilise le port 3306.
 
+Il faut configurer en variable d'environnement les trois données suivantes :
+- Pour la BDD : username (DATABASE_USERNAME), password (DATABASE_PASSWORD)
+- Pour le token : la secret key (JWT_SECRET)
+
 Dans le fichier application.properties se trouve les variables configurables suivantes :
-- Pour la BDD : username, password
-- Pour le token : la secret key
-- Pour l'upload d'images : le lien où elles sont enregistrées
+- Pour l'upload d'images : le lien où elles sont enregistrées : **picture/upload**
+- Le lien vers la base de donnée : **spring.datasource.url**
 
 ## Architecture
 

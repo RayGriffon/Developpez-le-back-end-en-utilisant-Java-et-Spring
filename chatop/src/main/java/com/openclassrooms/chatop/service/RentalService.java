@@ -6,7 +6,6 @@ import com.openclassrooms.chatop.model.Rental;
 import com.openclassrooms.chatop.repository.RentalRepository;
 import com.openclassrooms.chatop.service.dto.RentalDTO;
 import com.openclassrooms.chatop.service.dto.RentalFormDTO;
-import com.openclassrooms.chatop.service.dto.UpdateRentalDTO;
 import com.openclassrooms.chatop.service.mapper.RentalMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -61,19 +60,19 @@ public class RentalService {
     return rentalMapper.toRentalDTO(rental);
   }
 
-  public void createRental(RentalFormDTO rentalDTO, MultipartFile multipartFile) throws IOException {
+  public void createRental(RentalFormDTO rentalDTO, MultipartFile multipartFile){
     try {
       String url = saveImage(multipartFile);
       rentalRepository.save(rentalMapper.toRental(rentalDTO, url));
     } catch (IOException ex) {
-      throw new BadRequestException("Erreur lors de l'upload de l'image.");
+      throw new UnauthorizedException("Création de Rental non autorisée");
     }
   }
 
   public Rental updateRental(Integer id, Integer userId, String name, String description, BigDecimal surface, BigDecimal price) {
 
     Rental rental = rentalRepository.findById(id)
-      .orElseThrow(() -> new UnauthorizedException("Rental non trouvé"));
+      .orElseThrow(() -> new BadRequestException("Rental non trouvé"));
 
     if (!rental.getOwner().getId().equals(userId)) {
       throw new UnauthorizedException("Vous n'êtes pas autorisé à modifier ce rental");
